@@ -1,25 +1,64 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour
 {
-    public int maxHealth = 3;
-    private int currentHealth;
-
-    void Start()
+    public Image healthBoxImage;
+    public List<Image> heartImages;  
+    public int maxHealth = 5;        
+    private int playerHealth;
+    private bool canTakeDamage = true;  
+    public float damageCooldown = 1f;   
+    private void Start()
     {
-        currentHealth = maxHealth;
+        playerHealth = maxHealth;
+        UpdateHearts();
     }
 
-    public void TakeDamage(int damage)
+    public void SetHealth(int health)
     {
-        currentHealth -= damage;
-        Debug.Log("Player health: " + currentHealth);
+        playerHealth = health;
+        UpdateHearts();
+    }
 
-        if (currentHealth <= 0)
+    private void UpdateHearts()
+    {
+        for (int i = 0; i < heartImages.Count; i++)
         {
-            Debug.Log("Game Over!");
+            heartImages[i].enabled = i < playerHealth;
         }
+    }
+
+    public void TakeDamage(int damageAmount)
+    {
+        if (canTakeDamage && playerHealth > 0)
+        {
+            playerHealth -= damageAmount;
+            playerHealth = Mathf.Max(playerHealth, 0);  
+            UpdateHearts();
+
+            if (playerHealth <= 0)
+            {
+                Die();
+            }
+            else
+            {
+                StartCoroutine(DamageCooldown());
+            }
+        }
+    }
+
+    private IEnumerator DamageCooldown()
+    {
+        canTakeDamage = false;
+        yield return new WaitForSeconds(damageCooldown);
+        canTakeDamage = true;
+    }
+
+    private void Die()
+    {
+        Debug.Log("Player died!");
     }
 }

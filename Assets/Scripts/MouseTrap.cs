@@ -4,24 +4,17 @@ using UnityEngine;
 
 public class MouseTrap : MonoBehaviour
 {
-    public float trapDuration = 3f; 
+    public int damage = 1;  
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
-            PlayerMovement player = collision.GetComponent<PlayerMovement>();
-            if (player != null)
+            PlayerHealth playerHealth = collision.GetComponent<PlayerHealth>();
+            if (playerHealth != null)
             {
-                StartCoroutine(TrapPlayer(player));
+                playerHealth.TakeDamage(damage);
             }
         }
-    }
-
-    private IEnumerator TrapPlayer(PlayerMovement player)
-    {
-        player.enabled = false; 
-        yield return new WaitForSeconds(trapDuration); 
-        player.enabled = true; 
     }
 }

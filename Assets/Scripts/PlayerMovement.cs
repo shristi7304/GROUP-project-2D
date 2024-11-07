@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float moveSpeed = 5f; 
-    public float jumpForce = 10f; 
+    public float moveSpeed = 4f; 
+    public float jumpForce = 7.5f; 
     private Rigidbody2D rb;
     private bool isGrounded = false;
 
@@ -34,7 +34,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Ground"))
         {
-            isGrounded = true; // The player is grounded
+            isGrounded = true; 
         }
 
         // Check for Sugar Syrup or Slippery Floor
