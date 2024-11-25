@@ -12,6 +12,9 @@ TagManager:
   - Cookie
   - Hazard
   - HealthPickup
+  - Flour
+  - Sugar
+  - Butter
   layers:
   - Default
   - TransparentFX

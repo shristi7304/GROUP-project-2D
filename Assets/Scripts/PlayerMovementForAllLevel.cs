@@ -92,6 +92,7 @@ public class NewBehaviourScript : MonoBehaviour
         health = Mathf.Min(health + amount, maxHealth);
          playerHealthUI.SetHealth(health); 
         Debug.Log("Player gained health. Current health: " + health);
-}
+    }
 
 }
+
